@@ -1,0 +1,68 @@
+{% extends "base.html" %} {% block title %}Total Profit by Country for Region {{region}} {% endblock %}
+{%block content%}
+<div style="margin: auto;">
+    <canvas id="compoundBarChart"></canvas>
+    
+    <div class="caption">
+        <h1>Distribution of Profits by Country for {{ region }} Region</h1>
+        <p>Click on bars to view details</p>
+    </div>
+</div>
+
+{% endblock %}
+
+{%block scripts%}
+    <script>
+        var labels = {{ labels|safe }};
+        var totalRevenue = {{ total_revenue|safe }};
+        var totalProfit = {{ total_profit|safe }};
+
+        totalRevenue = totalRevenue.map((value, index) => value > totalProfit[index] ? value : totalProfit[index]);
+
+        var ctx = document.getElementById('compoundBarChart').getContext('2d');
+        var compoundBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Total Profit',
+                        data: totalProfit,
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        stack: 'stack1', // Use the same stack ID for stacking the bars
+                    },
+                    {
+                        label: 'Total Revenue',
+                        data: totalRevenue,
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                        stack: 'stack1', // Assign a stack ID for stacking the bars
+                    },
+                    
+                ],
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Total Revenue and Total Profit',
+                },
+                scales: {
+                    x: {
+                        stacked: true, // Enable stacked bars for the x-axis (country labels)
+                    },
+                    y: {
+                        stacked: true, // Enable stacked bars for the y-axis (total revenue and total profit)
+                    },
+                },
+            },
+        });
+
+        document.getElementById('compoundBarChart').onclick = function(event) {
+            var activeElement = compoundBarChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false)[0];
+            if (activeElement) {
+                var country = labels[activeElement.index];
+                window.location.href = '/line-chart/?country=' + encodeURIComponent(country);
+            }
+        };
+    </script>
+{% endblock %}

@@ -1,0 +1,37 @@
+# Ignore compiled Python files
+*.pyc
+
+# Ignore Django migration files
+**/migrations/*
+
+# Ignore the database file (SQLite in this example, adjust for other databases)
+db.sqlite3
+
+# Ignore the virtual environment directory (if using virtualenv or venv)
+venv/
+env/
+
+# Ignore the local settings file (if present)
+local_settings.py
+
+# Ignore any secret or sensitive information (e.g., API keys, passwords)
+secrets.json
+
+# Ignore development files, logs, and cache directories
+__pycache__/
+*.log
+*.cache/
+
+# Ignore media and static files (uploaded files and collected static assets)
+/media/*
+/static/*
+
+# Ignore IDE-specific files (e.g., for VSCode, PyCharm, etc.)
+.vscode/
+.idea/
+
+# Ignore OS-specific files (e.g., macOS .DS_Store)
+.DS_Store
+Thumbs.db
+
+# Add any other files or directories you want to ignore

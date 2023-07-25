@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% block title %}Item Types Sold {% endblock %}
+{%block content%}
+<div style="width: 600px; margin: auto">
+    <canvas id="polarChart"></canvas>
+    <div class="caption">
+      <h1>Distribution of Item Types</h1>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+var labels = {{ labels|safe }};
+  var totalItems = {{ total_items|safe }};
+
+  var ctx = document.getElementById('polarChart').getContext('2d');
+  var polarChart = new Chart(ctx, {
+      type: 'polarArea',
+      data: {
+          labels: labels,
+          datasets: [{
+              label: 'Total Item Types',
+              data: totalItems,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.7)',
+                  'rgba(54, 162, 235, 0.7)',
+                  'rgba(255, 206, 86, 0.7)',
+                  'rgba(75, 192, 192, 0.7)',
+                  'rgba(153, 102, 255, 0.7)',
+                  'rgba(255, 159, 64, 0.7)',
+              ],
+          }],
+      },
+      options: {
+          responsive: true,
+          title: {
+              display: true,
+              text: 'Total Item Types',
+          },
+      },
+  });
+</script>
+{% endblock %} 

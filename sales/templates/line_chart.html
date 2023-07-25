@@ -1,0 +1,51 @@
+{% extends "base.html" %} {% block title %}Total Profit by Year for {{country}} {% endblock %}
+{%block content%}
+<div style="width: 80%; margin: auto;">
+    <canvas id="lineChart"></canvas>
+    <div class="caption">
+        <h1>Distribution of Profits by Year for {{country}}</h1>
+        <p>Click on dots to view details</p>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    var labels = {{ labels|safe }};
+    var totalProfit = {{ total_profit|safe }};
+    var country = "{{ country|safe }}";
+
+    var ctx = document.getElementById('lineChart').getContext('2d');
+    var lineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Total Profit',
+                    data: totalProfit,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Line Chart - Total Profit per Year for Country: {{ country_filter }}',
+            },
+        },
+    });
+
+    document.getElementById('lineChart').onclick = function(event) {
+        var activeElement = lineChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false)[0];
+        if (activeElement) {
+            var year = labels[activeElement.index];
+            window.location.href = '/combo-chart/?country=' + encodeURIComponent(country)+'&year=' + encodeURIComponent(year);
+        }
+    };
+</script>
+{% endblock %} 
+

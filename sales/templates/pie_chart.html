@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% block title %}Total Profit by Region{% endblock %}
+{%block scripts%}
+<script>
+  var labels = {{ labels|safe }};
+  var totalProfits = {{ total_profits|safe }};
+
+  var ctx = document.getElementById('pieChart').getContext('2d');
+  var pieChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+          labels: labels,
+          datasets: [{
+              label: 'Total Profit by Region',
+              data: totalProfits,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.7)',
+                  'rgba(54, 162, 235, 0.7)',
+                  'rgba(255, 206, 86, 0.7)',
+                  'rgba(75, 192, 192, 0.7)',
+                  'rgba(153, 102, 255, 0.7)',
+                  'rgba(255, 159, 64, 0.7)',
+              ],
+          }],
+      },
+      options: {
+          responsive: true,
+          title: {
+              display: true,
+              text: 'Total Profit by Region',
+          },
+      },
+  });
+
+  document.getElementById('pieChart').onclick = function(event) {
+      var activeElement = pieChart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false)[0];
+      if (activeElement) {
+          var region = labels[activeElement.index];
+          window.location.href = '/bar-chart/?region=' + encodeURIComponent(region);
+      }
+  };
+</script>
+
+{% endblock %} 
+
+{% block content %}
+<div style="width: 600px; margin: auto">
+  <canvas id="pieChart"></canvas>
+  <div class="caption">
+    <h1>Distribution of Profits by Region</h1>
+    <p>Click on slices to view details</p>
+  </div>
+</div>
+
+{% endblock %}

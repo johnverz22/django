@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}ChartJs with Django{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'home' %}"> Reanza's Visualizations</a></h1>
+    </header>
+
+    <div class="content">
+        {%block content%}   
+        {%endblock content%}   
+    </div>
+
+    {%block scripts%}
+    {%endblock scripts%}
+</body>
+</html>

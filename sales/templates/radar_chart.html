@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Sales Channel per Region{% endblock %}
+{% block scripts %}
+<script>
+    var sales_channels = {{ sales_channels|safe }};
+    var region_labels = {{ region_labels|safe }};
+    var sales_data = {{ sales_data|safe }};
+
+    var ctx = document.getElementById('radarChart').getContext('2d');
+    var radarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: region_labels,
+            datasets: []
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Sales Channel per Region'
+            },
+            scale: {
+                ticks: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Add data for each sales_channel
+    for (var i = 0; i < sales_channels.length; i++) {
+        radarChart.data.datasets.push({
+            label: sales_channels[i],
+            data: sales_data[i],
+            borderColor: getRandomColor(1),
+            backgroundColor: getRandomColor(0.2),
+            
+        });
+    }
+
+    radarChart.update();
+
+    function getRandomColor(a) {
+        var r = Math.floor(Math.random() * 256); 
+        var g = Math.floor(Math.random() * 256);
+        var b = Math.floor(Math.random() * 256);
+
+        return `rgba(${r}, ${g}, ${b}, ${a})`;
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<div style="width: 750px; margin: auto;">
+    <canvas id="radarChart"></canvas>
+    <div class="caption">
+        <h1>Distribution of Sales Channel by Region</h1>
+      </div>
+</div>
+{% endblock %}

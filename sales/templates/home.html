@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reanza's Visualizations</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <header>
+        <h1><a href="{% url 'home' %}"> Reanza's Visualizations</a></h1>
+    </header>
+
+    <div class="dashboard">
+        <div  class="card">
+            <img class="thumbnail-image" src="{% static 'images/profit.jpg' %}" alt="Thumbnail Image">
+            <div class="overlay">
+                <div class="text-overlay">
+                    <h2><a href="{% url 'pie-chart' %}">Total Profit by Region</a></h2>
+                    <p>Using Pie Chart</p>
+                </div>
+            </div>
+        </div>
+
+        <div  class="card">
+            <img class="thumbnail-image" src="{% static 'images/polar.jpg' %}" alt="Thumbnail Image">
+            <div class="overlay">
+                <div class="text-overlay">
+                    <h2><a href="{% url 'polar-chart' %}">Total Item Types</a></h2>
+                    <p>Using Polar Area Chart</p>
+                </div>
+            </div>
+        </div>
+
+        <div  class="card">
+            <img class="thumbnail-image" src="{% static 'images/radar.png' %}" alt="Thumbnail Image">
+            <div class="overlay">
+                <div class="text-overlay">
+                    <h2><a href="{% url 'radar-chart' %}">Total Sales by Channel and Region</a></h2>
+                    <p>Using Radar Chart</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

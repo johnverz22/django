@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% block title %}Total Profit in the Year {{year}} for {{country}} {% endblock %}
+{%block content%}
+<div style="width: 80%; margin: auto;">
+    <canvas id="barLineChart"></canvas>
+    <div class="caption">
+        <h1>Distribution of Profits and Units Sold in the Year {{year}} for {{country}}</h1>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    var labels = {{ labels|safe }};
+    var totalProfit = {{ total_profit|safe }};
+    var unitsSold = {{ units_sold|safe }};
+
+    var ctx = document.getElementById('barLineChart').getContext('2d');
+    var barLineChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Total Profit',
+                    data: totalProfit,
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Total Profit and Units Sold for {{ country }} in {{ year }}',
+            },
+            scales: {
+                x: {
+                    stacked: true,
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: false,
+                },
+            },
+        },
+    });
+
+    var lineChartDataset = {
+        label: 'Units Sold',
+        data: unitsSold,
+        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        type: 'line',
+        fill: true,
+        borderWidth: 4,
+        yAxisID: 'y-axis-line'
+    };
+
+    barLineChart.data.datasets.push(lineChartDataset);
+    barLineChart.update();
+</script>
+{% endblock %} 
