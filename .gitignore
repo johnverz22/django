@@ -22,10 +22,6 @@ __pycache__/
 *.log
 *.cache/
 
-# Ignore media and static files (uploaded files and collected static assets)
-/media/*
-/static/*
-
 # Ignore IDE-specific files (e.g., for VSCode, PyCharm, etc.)
 .vscode/
 .idea/
