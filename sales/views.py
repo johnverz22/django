@@ -82,14 +82,11 @@ def combo_chart(request):
     ).order_by('month')
 
 
-     # Create labels for all months ("January" to "December")
     labels = [month_name[month] for month in range(1, 13)]
 
-    # Initialize total_profit list with zeros for all months
     total_profit = [0] * 12
     units_sold = [0] *12
 
-    # Populate total_profit list with actual data for existing months
     for item in data:
         month_index = item['month'] - 1
         total_profit[month_index] = float(item['total_profit'])
@@ -109,7 +106,7 @@ def polar_chart(request):
     data = Sale.objects.values('item_type').annotate(total_items=models.Count('item_type'))
     labels = [item['item_type'] for item in data]
     total_items = [float(item['total_items']) for item in data]
-    print(total_items)
+
     context = {
         'labels': json.dumps(labels),
         'total_items': json.dumps(total_items),
